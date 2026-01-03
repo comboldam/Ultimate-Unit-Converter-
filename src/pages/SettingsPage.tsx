@@ -203,11 +203,11 @@ export function SettingsPage() {
   };
 
   const handleTerms = () => {
-    window.open('https://ultimateconverter.app/terms', '_blank');
+    window.open('https://comboldam.github.io/Ultimate-Unit-Converter-/terms.html', '_blank');
   };
 
   const handlePrivacy = () => {
-    window.open('https://ultimateconverter.app/privacy', '_blank');
+    window.open('https://comboldam.github.io/Ultimate-Unit-Converter-/privacy-policy.html', '_blank');
   };
 
   const isAdFree = adFreeUntil !== null && adFreeUntil > Date.now();
@@ -265,7 +265,7 @@ export function SettingsPage() {
           </button>
 
           <button className="settings-item" onClick={handleTerms}>
-            <span className="settings-item-title">Terms of Service</span>
+            <span className="settings-item-title">Terms of Use</span>
             <span className="settings-item-arrow">›</span>
           </button>
 
@@ -273,6 +273,10 @@ export function SettingsPage() {
             <span className="settings-item-title">Privacy Policy</span>
             <span className="settings-item-arrow">›</span>
           </button>
+
+          <p className="settings-legal-text">
+            By using this app, you agree to our Privacy Policy and Terms of Use.
+          </p>
         </div>
       </div>
     </div>

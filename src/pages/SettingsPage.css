@@ -89,3 +89,12 @@
   color: #888;
   line-height: 1;
 }
+
+.settings-legal-text {
+  padding: 1rem 1.5rem;
+  font-size: 0.8rem;
+  color: #666;
+  text-align: center;
+  line-height: 1.4;
+  margin: 0;
+}
