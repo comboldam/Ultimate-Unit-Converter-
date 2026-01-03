@@ -195,7 +195,7 @@ export function SettingsPage() {
   };
 
   const handleSupport = () => {
-    window.location.href = 'mailto:support@ultimateconverter.app';
+    window.location.href = 'mailto:ultimateconverterapp@gmail.com';
   };
 
   const handleLanguage = () => {
@@ -254,7 +254,7 @@ export function SettingsPage() {
 
           <button className="settings-item" onClick={handleSupport}>
             <span className="settings-item-title">Support</span>
-            <span className="settings-item-value">support@ultimateconverter.app</span>
+            <span className="settings-item-value">ultimateconverterapp@gmail.com</span>
             <span className="settings-item-arrow">›</span>
           </button>
 
