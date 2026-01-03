@@ -1,0 +1,266 @@
+{
+  "length": [
+    { "id": "meter", "name": "Meter", "symbol": "m", "toBase": 1, "category": "Physical" },
+    { "id": "kilometer", "name": "Kilometer", "symbol": "km", "toBase": 1000, "category": "Physical" },
+    { "id": "centimeter", "name": "Centimeter", "symbol": "cm", "toBase": 0.01, "category": "Physical" },
+    { "id": "millimeter", "name": "Millimeter", "symbol": "mm", "toBase": 0.001, "category": "Physical" },
+    { "id": "micrometer", "name": "Micrometer", "symbol": "μm", "toBase": 0.000001, "category": "Physical" },
+    { "id": "nanometer", "name": "Nanometer", "symbol": "nm", "toBase": 0.000000001, "category": "Physical" },
+    { "id": "mile", "name": "Mile", "symbol": "mi", "toBase": 1609.344, "category": "Physical" },
+    { "id": "yard", "name": "Yard", "symbol": "yd", "toBase": 0.9144, "category": "Physical" },
+    { "id": "foot", "name": "Foot", "symbol": "ft", "toBase": 0.3048, "category": "Physical" },
+    { "id": "inch", "name": "Inch", "symbol": "in", "toBase": 0.0254, "category": "Physical" },
+    { "id": "nautical_mile", "name": "Nautical Mile", "symbol": "nmi", "toBase": 1852, "category": "Physical" }
+  ],
+  "pressure": [
+    { "id": "pascal", "name": "Pascal", "symbol": "Pa", "toBase": 1, "category": "Physical" },
+    { "id": "kilopascal", "name": "Kilopascal", "symbol": "kPa", "toBase": 1000, "category": "Physical" },
+    { "id": "megapascal", "name": "Megapascal", "symbol": "MPa", "toBase": 1000000, "category": "Physical" },
+    { "id": "bar", "name": "Bar", "symbol": "bar", "toBase": 100000, "category": "Physical" },
+    { "id": "millibar", "name": "Millibar", "symbol": "mbar", "toBase": 100, "category": "Physical" },
+    { "id": "psi", "name": "PSI", "symbol": "psi", "toBase": 6894.757, "category": "Physical" },
+    { "id": "atmosphere", "name": "Atmosphere", "symbol": "atm", "toBase": 101325, "category": "Physical" },
+    { "id": "torr", "name": "Torr", "symbol": "Torr", "toBase": 133.322, "category": "Physical" },
+    { "id": "mmhg", "name": "mmHg", "symbol": "mmHg", "toBase": 133.322, "category": "Physical" }
+  ],
+  "temperature": [
+    { "id": "celsius", "name": "Celsius", "symbol": "°C", "toBase": 1, "offset": 273.15, "category": "Physical" },
+    { "id": "fahrenheit", "name": "Fahrenheit", "symbol": "°F", "toBase": 0.555556, "offset": 255.372, "category": "Physical" },
+    { "id": "kelvin", "name": "Kelvin", "symbol": "K", "toBase": 1, "offset": 0, "category": "Physical" }
+  ],
+  "area": [
+    { "id": "square_meter", "name": "Square Meter", "symbol": "m²", "toBase": 1, "category": "Physical" },
+    { "id": "square_kilometer", "name": "Square Kilometer", "symbol": "km²", "toBase": 1000000, "category": "Physical" },
+    { "id": "square_centimeter", "name": "Square Centimeter", "symbol": "cm²", "toBase": 0.0001, "category": "Physical" },
+    { "id": "square_millimeter", "name": "Square Millimeter", "symbol": "mm²", "toBase": 0.000001, "category": "Physical" },
+    { "id": "hectare", "name": "Hectare", "symbol": "ha", "toBase": 10000, "category": "Physical" },
+    { "id": "acre", "name": "Acre", "symbol": "ac", "toBase": 4046.86, "category": "Physical" },
+    { "id": "square_mile", "name": "Square Mile", "symbol": "mi²", "toBase": 2589988, "category": "Physical" },
+    { "id": "square_yard", "name": "Square Yard", "symbol": "yd²", "toBase": 0.836127, "category": "Physical" },
+    { "id": "square_foot", "name": "Square Foot", "symbol": "ft²", "toBase": 0.092903, "category": "Physical" },
+    { "id": "square_inch", "name": "Square Inch", "symbol": "in²", "toBase": 0.00064516, "category": "Physical" }
+  ],
+  "volume": [
+    { "id": "liter", "name": "Liter", "symbol": "L", "toBase": 1, "category": "Physical" },
+    { "id": "milliliter", "name": "Milliliter", "symbol": "mL", "toBase": 0.001, "category": "Physical" },
+    { "id": "cubic_meter", "name": "Cubic Meter", "symbol": "m³", "toBase": 1000, "category": "Physical" },
+    { "id": "cubic_centimeter", "name": "Cubic Centimeter", "symbol": "cm³", "toBase": 0.001, "category": "Physical" },
+    { "id": "gallon_us", "name": "Gallon (US)", "symbol": "gal", "toBase": 3.78541, "category": "Physical" },
+    { "id": "gallon_uk", "name": "Gallon (UK)", "symbol": "gal UK", "toBase": 4.54609, "category": "Physical" },
+    { "id": "quart_us", "name": "Quart (US)", "symbol": "qt", "toBase": 0.946353, "category": "Physical" },
+    { "id": "pint_us", "name": "Pint (US)", "symbol": "pt", "toBase": 0.473176, "category": "Physical" },
+    { "id": "cup_us", "name": "Cup (US)", "symbol": "cup", "toBase": 0.236588, "category": "Physical" },
+    { "id": "fluid_ounce_us", "name": "Fluid Ounce (US)", "symbol": "fl oz", "toBase": 0.0295735, "category": "Physical" },
+    { "id": "tablespoon", "name": "Tablespoon", "symbol": "tbsp", "toBase": 0.0147868, "category": "Physical" },
+    { "id": "teaspoon", "name": "Teaspoon", "symbol": "tsp", "toBase": 0.00492892, "category": "Physical" }
+  ],
+  "speed": [
+    { "id": "meter_per_second", "name": "Meter per Second", "symbol": "m/s", "toBase": 1, "category": "Physical" },
+    { "id": "kilometer_per_hour", "name": "Kilometer per Hour", "symbol": "km/h", "toBase": 0.277778, "category": "Physical" },
+    { "id": "mile_per_hour", "name": "Mile per Hour", "symbol": "mph", "toBase": 0.44704, "category": "Physical" },
+    { "id": "knot", "name": "Knot", "symbol": "kn", "toBase": 0.514444, "category": "Physical" },
+    { "id": "foot_per_second", "name": "Foot per Second", "symbol": "ft/s", "toBase": 0.3048, "category": "Physical" },
+    { "id": "mach", "name": "Mach", "symbol": "Ma", "toBase": 343, "category": "Physical" }
+  ],
+  "mass": [
+    { "id": "gram", "name": "Gram", "symbol": "g", "toBase": 1, "category": "Physical" },
+    { "id": "kilogram", "name": "Kilogram", "symbol": "kg", "toBase": 1000, "category": "Physical" },
+    { "id": "milligram", "name": "Milligram", "symbol": "mg", "toBase": 0.001, "category": "Physical" },
+    { "id": "microgram", "name": "Microgram", "symbol": "μg", "toBase": 0.000001, "category": "Physical" },
+    { "id": "tonne", "name": "Tonne", "symbol": "t", "toBase": 1000000, "category": "Physical" },
+    { "id": "pound", "name": "Pound", "symbol": "lb", "toBase": 453.592, "category": "Physical" },
+    { "id": "ounce", "name": "Ounce", "symbol": "oz", "toBase": 28.3495, "category": "Physical" },
+    { "id": "stone", "name": "Stone", "symbol": "st", "toBase": 6350.29, "category": "Physical" },
+    { "id": "ton_us", "name": "Ton (US)", "symbol": "ton", "toBase": 907185, "category": "Physical" },
+    { "id": "ton_uk", "name": "Ton (UK)", "symbol": "ton UK", "toBase": 1016046.91, "category": "Physical" }
+  ],
+  "data": [
+    { "id": "byte", "name": "Byte", "symbol": "B", "toBase": 1, "category": "Digital" },
+    { "id": "kilobyte", "name": "Kilobyte", "symbol": "KB", "toBase": 1024, "category": "Digital" },
+    { "id": "megabyte", "name": "Megabyte", "symbol": "MB", "toBase": 1048576, "category": "Digital" },
+    { "id": "gigabyte", "name": "Gigabyte", "symbol": "GB", "toBase": 1073741824, "category": "Digital" },
+    { "id": "terabyte", "name": "Terabyte", "symbol": "TB", "toBase": 1099511627776, "category": "Digital" },
+    { "id": "petabyte", "name": "Petabyte", "symbol": "PB", "toBase": 1125899906842624, "category": "Digital" },
+    { "id": "bit", "name": "Bit", "symbol": "bit", "toBase": 0.125, "category": "Digital" },
+    { "id": "kilobit", "name": "Kilobit", "symbol": "Kbit", "toBase": 128, "category": "Digital" },
+    { "id": "megabit", "name": "Megabit", "symbol": "Mbit", "toBase": 131072, "category": "Digital" },
+    { "id": "gigabit", "name": "Gigabit", "symbol": "Gbit", "toBase": 134217728, "category": "Digital" }
+  ],
+  "time": [
+    { "id": "second", "name": "Second", "symbol": "s", "toBase": 1, "category": "Physical" },
+    { "id": "millisecond", "name": "Millisecond", "symbol": "ms", "toBase": 0.001, "category": "Physical" },
+    { "id": "microsecond", "name": "Microsecond", "symbol": "μs", "toBase": 0.000001, "category": "Physical" },
+    { "id": "nanosecond", "name": "Nanosecond", "symbol": "ns", "toBase": 0.000000001, "category": "Physical" },
+    { "id": "minute", "name": "Minute", "symbol": "min", "toBase": 60, "category": "Physical" },
+    { "id": "hour", "name": "Hour", "symbol": "h", "toBase": 3600, "category": "Physical" },
+    { "id": "day", "name": "Day", "symbol": "d", "toBase": 86400, "category": "Physical" },
+    { "id": "week", "name": "Week", "symbol": "wk", "toBase": 604800, "category": "Physical" },
+    { "id": "month", "name": "Month", "symbol": "mo", "toBase": 2628000, "category": "Physical" },
+    { "id": "year", "name": "Year", "symbol": "yr", "toBase": 31536000, "category": "Physical" },
+    { "id": "decade", "name": "Decade", "symbol": "dec", "toBase": 315360000, "category": "Physical" }
+  ],
+  "acceleration": [
+    { "id": "meter_per_second_squared", "name": "Meter per Second²", "symbol": "m/s²", "toBase": 1, "category": "Physical" },
+    { "id": "gravity", "name": "Standard Gravity", "symbol": "g", "toBase": 9.80665, "category": "Physical" },
+    { "id": "foot_per_second_squared", "name": "Foot per Second²", "symbol": "ft/s²", "toBase": 0.3048, "category": "Physical" },
+    { "id": "gal", "name": "Gal", "symbol": "Gal", "toBase": 0.01, "category": "Physical" }
+  ],
+  "angle": [
+    { "id": "degree", "name": "Degree", "symbol": "°", "toBase": 1, "category": "Physical" },
+    { "id": "radian", "name": "Radian", "symbol": "rad", "toBase": 57.29577951308232, "category": "Physical" },
+    { "id": "gradian", "name": "Gradian", "symbol": "grad", "toBase": 0.9, "category": "Physical" },
+    { "id": "arcminute", "name": "Arc Minute", "symbol": "'", "toBase": 0.0166667, "category": "Physical" },
+    { "id": "arcsecond", "name": "Arc Second", "symbol": "\"", "toBase": 0.000277778, "category": "Physical" }
+  ],
+  "power": [
+    { "id": "watt", "name": "Watt", "symbol": "W", "toBase": 1, "category": "Electrical" },
+    { "id": "kilowatt", "name": "Kilowatt", "symbol": "kW", "toBase": 1000, "category": "Electrical" },
+    { "id": "megawatt", "name": "Megawatt", "symbol": "MW", "toBase": 1000000, "category": "Electrical" },
+    { "id": "gigawatt", "name": "Gigawatt", "symbol": "GW", "toBase": 1000000000, "category": "Electrical" },
+    { "id": "horsepower", "name": "Horsepower", "symbol": "hp", "toBase": 745.7, "category": "Electrical" },
+    { "id": "milliwatt", "name": "Milliwatt", "symbol": "mW", "toBase": 0.001, "category": "Electrical" },
+    { "id": "btu_per_hour", "name": "BTU per Hour", "symbol": "BTU/h", "toBase": 0.293071, "category": "Electrical" }
+  ],
+  "energy": [
+    { "id": "joule", "name": "Joule", "symbol": "J", "toBase": 1, "category": "Electrical" },
+    { "id": "kilojoule", "name": "Kilojoule", "symbol": "kJ", "toBase": 1000, "category": "Electrical" },
+    { "id": "megajoule", "name": "Megajoule", "symbol": "MJ", "toBase": 1000000, "category": "Electrical" },
+    { "id": "calorie", "name": "Calorie", "symbol": "cal", "toBase": 4.184, "category": "Electrical" },
+    { "id": "kilocalorie", "name": "Kilocalorie", "symbol": "kcal", "toBase": 4184, "category": "Electrical" },
+    { "id": "watt_hour", "name": "Watt Hour", "symbol": "Wh", "toBase": 3600, "category": "Electrical" },
+    { "id": "kilowatt_hour", "name": "Kilowatt Hour", "symbol": "kWh", "toBase": 3600000, "category": "Electrical" },
+    { "id": "electronvolt", "name": "Electronvolt", "symbol": "eV", "toBase": 1.60218e-19, "category": "Electrical" },
+    { "id": "btu", "name": "BTU", "symbol": "BTU", "toBase": 1055.06, "category": "Electrical" }
+  ],
+  "charge": [
+    { "id": "coulomb", "name": "Coulomb", "symbol": "C", "toBase": 1, "category": "Electrical" },
+    { "id": "millicoulomb", "name": "Millicoulomb", "symbol": "mC", "toBase": 0.001, "category": "Electrical" },
+    { "id": "microcoulomb", "name": "Microcoulomb", "symbol": "μC", "toBase": 0.000001, "category": "Electrical" },
+    { "id": "nanocoulomb", "name": "Nanocoulomb", "symbol": "nC", "toBase": 0.000000001, "category": "Electrical" },
+    { "id": "ampere_hour", "name": "Ampere Hour", "symbol": "Ah", "toBase": 3600, "category": "Electrical" },
+    { "id": "milliampere_hour", "name": "Milliampere Hour", "symbol": "mAh", "toBase": 3.6, "category": "Electrical" }
+  ],
+  "frequency": [
+    { "id": "hertz", "name": "Hertz", "symbol": "Hz", "toBase": 1, "category": "Electrical" },
+    { "id": "kilohertz", "name": "Kilohertz", "symbol": "kHz", "toBase": 1000, "category": "Electrical" },
+    { "id": "megahertz", "name": "Megahertz", "symbol": "MHz", "toBase": 1000000, "category": "Electrical" },
+    { "id": "gigahertz", "name": "Gigahertz", "symbol": "GHz", "toBase": 1000000000, "category": "Electrical" },
+    { "id": "terahertz", "name": "Terahertz", "symbol": "THz", "toBase": 1000000000000, "category": "Electrical" }
+  ],
+  "resistance": [
+    { "id": "ohm", "name": "Ohm", "symbol": "Ω", "toBase": 1, "category": "Electrical" },
+    { "id": "milliohm", "name": "Milliohm", "symbol": "mΩ", "toBase": 0.001, "category": "Electrical" },
+    { "id": "kiloohm", "name": "Kiloohm", "symbol": "kΩ", "toBase": 1000, "category": "Electrical" },
+    { "id": "megaohm", "name": "Megaohm", "symbol": "MΩ", "toBase": 1000000, "category": "Electrical" }
+  ],
+  "voltage": [
+    { "id": "volt", "name": "Volt", "symbol": "V", "toBase": 1, "category": "Electrical" },
+    { "id": "millivolt", "name": "Millivolt", "symbol": "mV", "toBase": 0.001, "category": "Electrical" },
+    { "id": "microvolt", "name": "Microvolt", "symbol": "μV", "toBase": 0.000001, "category": "Electrical" },
+    { "id": "kilovolt", "name": "Kilovolt", "symbol": "kV", "toBase": 1000, "category": "Electrical" },
+    { "id": "megavolt", "name": "Megavolt", "symbol": "MV", "toBase": 1000000, "category": "Electrical" }
+  ],
+  "current": [
+    { "id": "ampere", "name": "Ampere", "symbol": "A", "toBase": 1, "category": "Electrical" },
+    { "id": "milliampere", "name": "Milliampere", "symbol": "mA", "toBase": 0.001, "category": "Electrical" },
+    { "id": "microampere", "name": "Microampere", "symbol": "μA", "toBase": 0.000001, "category": "Electrical" },
+    { "id": "kiloampere", "name": "Kiloampere", "symbol": "kA", "toBase": 1000, "category": "Electrical" }
+  ],
+  "fuel-consumption": [
+    { "id": "liter_per_100km", "name": "Liter per 100km", "symbol": "L/100km", "toBase": 1, "category": "Lifestyle" },
+    { "id": "km_per_liter", "name": "Kilometer per Liter", "symbol": "km/L", "toBase": 100, "inverse": true, "category": "Lifestyle" },
+    { "id": "mpg_us", "name": "MPG (US)", "symbol": "mpg", "toBase": 235.215, "inverse": true, "category": "Lifestyle" },
+    { "id": "mpg_uk", "name": "MPG (UK)", "symbol": "mpg UK", "toBase": 282.481, "inverse": true, "category": "Lifestyle" },
+    { "id": "mile_per_liter", "name": "Mile per Liter", "symbol": "mi/L", "toBase": 160.934, "inverse": true, "category": "Lifestyle" }
+  ],
+  "fuel-volume": [
+    { "id": "liter", "name": "Liter", "symbol": "L", "toBase": 1, "category": "Lifestyle" },
+    { "id": "gallon_us", "name": "Gallon (US)", "symbol": "gal", "toBase": 3.78541, "category": "Lifestyle" },
+    { "id": "gallon_uk", "name": "Gallon (UK)", "symbol": "gal UK", "toBase": 4.54609, "category": "Lifestyle" },
+    { "id": "barrel_oil", "name": "Barrel (Oil)", "symbol": "bbl", "toBase": 158.987, "category": "Lifestyle" }
+  ],
+  "ring-size": [
+    { "id": "diameter_mm", "name": "Diameter (mm)", "symbol": "mm", "toBase": 1, "category": "Lifestyle" },
+    { "id": "us", "name": "US Ring Size", "symbol": "US", "toBase": 1, "category": "Lifestyle" },
+    { "id": "uk", "name": "UK Ring Size", "symbol": "UK", "toBase": 1, "category": "Lifestyle" },
+    { "id": "eu", "name": "EU Ring Size", "symbol": "EU", "toBase": 1, "category": "Lifestyle" },
+    { "id": "japan", "name": "Japan Ring Size", "symbol": "JP", "toBase": 1, "category": "Lifestyle" }
+  ],
+  "mens-shoe-size": [
+    { "id": "cm", "name": "Centimeters", "symbol": "cm", "toBase": 1, "category": "Lifestyle" },
+    { "id": "inches", "name": "Inches", "symbol": "in", "toBase": 2.54, "category": "Lifestyle" },
+    { "id": "us_mens", "name": "US Men's", "symbol": "US", "toBase": 1, "category": "Lifestyle" },
+    { "id": "eu", "name": "EU", "symbol": "EU", "toBase": 1, "category": "Lifestyle" },
+    { "id": "uk", "name": "UK", "symbol": "UK", "toBase": 1, "category": "Lifestyle" },
+    { "id": "china", "name": "China", "symbol": "CN", "toBase": 1, "category": "Lifestyle" }
+  ],
+  "womens-shoe-size": [
+    { "id": "cm", "name": "Centimeters", "symbol": "cm", "toBase": 1, "category": "Lifestyle" },
+    { "id": "inches", "name": "Inches", "symbol": "in", "toBase": 2.54, "category": "Lifestyle" },
+    { "id": "us_womens", "name": "US Women's", "symbol": "US", "toBase": 1, "category": "Lifestyle" },
+    { "id": "eu", "name": "EU", "symbol": "EU", "toBase": 1, "category": "Lifestyle" },
+    { "id": "uk", "name": "UK", "symbol": "UK", "toBase": 1, "category": "Lifestyle" },
+    { "id": "china", "name": "China", "symbol": "CN", "toBase": 1, "category": "Lifestyle" }
+  ],
+  "cooking": [
+    { "id": "cup", "name": "Cup", "symbol": "cup", "toBase": 1, "category": "Lifestyle" },
+    { "id": "tablespoon", "name": "Tablespoon", "symbol": "tbsp", "toBase": 0.0625, "category": "Lifestyle" },
+    { "id": "teaspoon", "name": "Teaspoon", "symbol": "tsp", "toBase": 0.0208333, "category": "Lifestyle" },
+    { "id": "fluid_ounce", "name": "Fluid Ounce", "symbol": "fl oz", "toBase": 0.125, "category": "Lifestyle" },
+    { "id": "milliliter", "name": "Milliliter", "symbol": "mL", "toBase": 0.00422675, "category": "Lifestyle" },
+    { "id": "liter", "name": "Liter", "symbol": "L", "toBase": 4.22675, "category": "Lifestyle" },
+    { "id": "pint", "name": "Pint", "symbol": "pt", "toBase": 2, "category": "Lifestyle" },
+    { "id": "quart", "name": "Quart", "symbol": "qt", "toBase": 4, "category": "Lifestyle" },
+    { "id": "gallon", "name": "Gallon", "symbol": "gal", "toBase": 16, "category": "Lifestyle" }
+  ],
+  "network-bandwidth": [
+    { "id": "bit_per_second", "name": "Bit per Second", "symbol": "bps", "toBase": 1, "category": "Scientific" },
+    { "id": "kilobit_per_second", "name": "Kilobit per Second", "symbol": "Kbps", "toBase": 1000, "category": "Scientific" },
+    { "id": "megabit_per_second", "name": "Megabit per Second", "symbol": "Mbps", "toBase": 1000000, "category": "Scientific" },
+    { "id": "gigabit_per_second", "name": "Gigabit per Second", "symbol": "Gbps", "toBase": 1000000000, "category": "Scientific" },
+    { "id": "terabit_per_second", "name": "Terabit per Second", "symbol": "Tbps", "toBase": 1000000000000, "category": "Scientific" },
+    { "id": "byte_per_second", "name": "Byte per Second", "symbol": "B/s", "toBase": 8, "category": "Scientific" },
+    { "id": "kilobyte_per_second", "name": "Kilobyte per Second", "symbol": "KB/s", "toBase": 8000, "category": "Scientific" },
+    { "id": "megabyte_per_second", "name": "Megabyte per Second", "symbol": "MB/s", "toBase": 8000000, "category": "Scientific" }
+  ],
+  "illuminance": [
+    { "id": "lux", "name": "Lux", "symbol": "lx", "toBase": 1, "category": "Scientific" },
+    { "id": "foot_candle", "name": "Foot-Candle", "symbol": "fc", "toBase": 10.764, "category": "Scientific" },
+    { "id": "lumen_per_square_meter", "name": "Lumen per m²", "symbol": "lm/m²", "toBase": 1, "category": "Scientific" }
+  ],
+  "wind-speed": [
+    { "id": "meter_per_second", "name": "Meter per Second", "symbol": "m/s", "toBase": 1, "category": "Scientific" },
+    { "id": "kilometer_per_hour", "name": "Kilometer per Hour", "symbol": "km/h", "toBase": 0.277778, "category": "Scientific" },
+    { "id": "mile_per_hour", "name": "Mile per Hour", "symbol": "mph", "toBase": 0.44704, "category": "Scientific" },
+    { "id": "knot", "name": "Knot", "symbol": "kn", "toBase": 0.514444, "category": "Scientific" },
+    { "id": "beaufort", "name": "Beaufort Scale", "symbol": "Bft", "toBase": 0.836, "category": "Scientific" }
+  ],
+  "concentration": [
+    { "id": "mg_per_liter", "name": "Milligram per Liter", "symbol": "mg/L", "toBase": 1, "category": "Scientific" },
+    { "id": "g_per_liter", "name": "Gram per Liter", "symbol": "g/L", "toBase": 1000, "category": "Scientific" },
+    { "id": "kg_per_cubic_meter", "name": "Kilogram per m³", "symbol": "kg/m³", "toBase": 1000, "category": "Scientific" },
+    { "id": "ppm", "name": "Parts per Million", "symbol": "ppm", "toBase": 1, "category": "Scientific" },
+    { "id": "percent", "name": "Percent", "symbol": "%", "toBase": 10000, "category": "Scientific" }
+  ],
+  "radioactivity": [
+    { "id": "becquerel", "name": "Becquerel", "symbol": "Bq", "toBase": 1, "category": "Scientific" },
+    { "id": "kilobecquerel", "name": "Kilobecquerel", "symbol": "kBq", "toBase": 1000, "category": "Scientific" },
+    { "id": "megabecquerel", "name": "Megabecquerel", "symbol": "MBq", "toBase": 1000000, "category": "Scientific" },
+    { "id": "gigabecquerel", "name": "Gigabecquerel", "symbol": "GBq", "toBase": 1000000000, "category": "Scientific" },
+    { "id": "curie", "name": "Curie", "symbol": "Ci", "toBase": 37000000000, "category": "Scientific" },
+    { "id": "millicurie", "name": "Millicurie", "symbol": "mCi", "toBase": 37000000, "category": "Scientific" },
+    { "id": "microcurie", "name": "Microcurie", "symbol": "μCi", "toBase": 37000, "category": "Scientific" },
+    { "id": "rutherford", "name": "Rutherford", "symbol": "Rd", "toBase": 1000000, "category": "Scientific" }
+  ],
+  "radiation-dose": [
+    { "id": "gray", "name": "Gray (absorbed dose)", "symbol": "Gy", "toBase": 1, "category": "Scientific" },
+    { "id": "milligray", "name": "Milligray (absorbed dose)", "symbol": "mGy", "toBase": 0.001, "category": "Scientific" },
+    { "id": "centigray", "name": "Centigray (absorbed dose)", "symbol": "cGy", "toBase": 0.01, "category": "Scientific" },
+    { "id": "rad", "name": "Rad (absorbed dose)", "symbol": "rad", "toBase": 0.01, "category": "Scientific" },
+    { "id": "millirad", "name": "Millirad (absorbed dose)", "symbol": "mrad", "toBase": 0.00001, "category": "Scientific" },
+    { "id": "sievert", "name": "Sievert (equivalent dose)", "symbol": "Sv", "toBase": 1, "category": "Scientific" },
+    { "id": "millisievert", "name": "Millisievert (equivalent dose)", "symbol": "mSv", "toBase": 0.001, "category": "Scientific" },
+    { "id": "rem", "name": "Rem (equivalent dose)", "symbol": "rem", "toBase": 0.01, "category": "Scientific" },
+    { "id": "millirem", "name": "Millirem (equivalent dose)", "symbol": "mrem", "toBase": 0.00001, "category": "Scientific" }
+  ]
+}

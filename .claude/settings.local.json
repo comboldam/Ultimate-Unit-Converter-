@@ -1,0 +1,43 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npm run dev:*)",
+      "Bash(cat:*)",
+      "Bash(npm test:*)",
+      "Bash(npm run build:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx cap init:*)",
+      "Bash(npx cap:*)",
+      "Bash(adb devices:*)",
+      "Bash(where:*)",
+      "Bash(gradlew.bat tasks:*)",
+      "Bash(./gradlew.bat:*)",
+      "Bash(export JAVA_HOME:*)",
+      "Bash(export PATH=\"$JAVA_HOME/bin:$PATH\")",
+      "Bash(dir \"C:\\\\Users\\\\combo\\\\AppData\\\\Local\\\\Android\\\\Sdk\")",
+      "Bash(dir \"C:\\\\Android\\\\Sdk\")",
+      "Bash(\"C:\\\\Users\\\\combo\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\platform-tools\\\\adb.exe\" devices)",
+      "Bash(\"C:\\\\Users\\\\combo\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\platform-tools\\\\adb.exe\" -s ZL8324XZNH install -r \"c:\\\\Users\\\\combo\\\\Desktop\\\\Ultimate Unit Converter\\\\android\\\\app\\\\build\\\\outputs\\\\apk\\\\debug\\\\app-debug.apk\")",
+      "Bash(\"C:\\\\Users\\\\combo\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\platform-tools\\\\adb.exe\" -s ZL8324XZNH shell am start -n app.ultimateconverter/.MainActivity)",
+      "Bash(\"C:\\\\Users\\\\combo\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\platform-tools\\\\adb.exe\" -s ZL8324XZNH shell pm uninstall app.ultimateconverter)",
+      "Bash(\"C:\\\\Users\\\\combo\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\platform-tools\\\\adb.exe\" -s ZL8324XZNH install \"c:\\\\Users\\\\combo\\\\Desktop\\\\Ultimate Unit Converter\\\\android\\\\app\\\\build\\\\outputs\\\\apk\\\\debug\\\\app-debug.apk\")",
+      "Bash(export JAVA_HOME=\"C:\\\\Program Files\\\\Java\\\\jdk-17\")",
+      "Bash(set \"JAVA_HOME=C:\\\\Program Files\\\\Java\\\\jdk-17\")",
+      "Bash(gradlew.bat assembleDebug:*)",
+      "Bash(cmd /c \"set \"\"JAVA_HOME=C:\\\\Program Files\\\\Java\\\\jdk-17\"\" && gradlew.bat assembleDebug\")",
+      "Bash(powershell -Command \"$env:JAVA_HOME=''C:\\\\Program Files\\\\Java\\\\jdk-17''; .\\\\gradlew.bat assembleDebug\")",
+      "Bash(dir \"C:\\\\Program Files\\\\Java\")",
+      "Bash(cmd /c build-temp.bat)",
+      "Bash(\"C:\\\\Program Files\\\\Android\\\\Android Studio\\\\jbr\\\\bin\\\\java.exe\" -version)",
+      "Bash(./build-temp.bat)",
+      "Bash(\"c:\\\\Users\\\\combo\\\\Desktop\\\\Ultimate Unit Converter\\\\android\\\\build-temp.bat\")",
+      "Bash(call build-temp.bat)",
+      "Bash(cmd /c \"c:\\\\Users\\\\combo\\\\Desktop\\\\Ultimate Unit Converter\\\\android\\\\build-temp.bat\")",
+      "Bash(set \"JAVA_HOME=C:\\\\Program Files\\\\Android\\\\Android Studio\\\\jbr\")",
+      "Bash(set \"PATH=%JAVA_HOME%\\\\bin;%PATH%\")",
+      "Bash(powershell -Command \"$env:JAVA_HOME=''C:\\\\Program Files\\\\Android\\\\Android Studio\\\\jbr''; cd ''c:\\\\Users\\\\combo\\\\Desktop\\\\Ultimate Unit Converter\\\\android''; .\\\\gradlew.bat assembleDebug\")",
+      "Bash(powershell -Command:*)"
+    ]
+  }
+}
