@@ -1,99 +1,128 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { AdMob, BannerAdSize, BannerAdPosition } from '@capacitor-community/admob';
 import type { BannerAdOptions } from '@capacitor-community/admob';
 import { Capacitor } from '@capacitor/core';
+import { App } from '@capacitor/app';
 import { isAdFree } from '../utils/adFreeState';
 import { AD_FREE_EVENT } from '../pages/SettingsPage';
 import { trackAdEvent } from '../utils/adReport';
 
-export function AdMobBanner() {
-  const [bannerHeight, setBannerHeight] = useState(50); // Reserve minimal space to prevent layout shift
-  const [shouldShowAds, setShouldShowAds] = useState(true);
+// REAL: ca-app-pub-1622404623822707/7041260848
+const BANNER_AD_ID = 'ca-app-pub-3940256099942544/6300978111'; // TEST
 
-  // Calculate adaptive banner height based on screen width
-  // App is locked to portrait orientation
+export function AdMobBanner() {
+  const [bannerHeight, setBannerHeight] = useState(50);
+  const [, setShouldShowAds] = useState(true);
+  const bannerVisibleRef = useRef(false);
+  const retryTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const getAdaptiveBannerHeight = () => {
     const width = window.innerWidth;
     const dp = width / window.devicePixelRatio;
-
-    // Google's adaptive banner sizing for portrait orientation
     if (dp >= 728) {
-      return 90; // Tablet size
+      return 90;
     } else {
-      return 32; // Standard phone - matches actual ad height
+      return 32;
     }
   };
 
-  const showBanner = useCallback(async () => {
-    console.log('[AdMobBanner] Attempting to show banner ad...');
+  const showBanner = useCallback(async (isRetry = false) => {
+    // Check ad-free status before showing
+    const adFreeStatus = await isAdFree();
+    if (adFreeStatus) {
+      console.log('[AdMobBanner] User is ad-free, not showing banner');
+      bannerVisibleRef.current = false;
+      setBannerHeight(0);
+      return false;
+    }
+
+    console.log(`[AdMobBanner] ${isRetry ? '🔄 Retrying' : 'Attempting'} to show banner ad...`);
+    
     try {
-      // Remove existing banner first to avoid duplication
-      console.log('[AdMobBanner] Removing any existing banner...');
-      await AdMob.removeBanner().catch(() => {/* Ignore if no banner exists */});
+      // Remove existing banner first
+      await AdMob.removeBanner().catch(() => {});
 
       const options: BannerAdOptions = {
-        // REAL: ca-app-pub-1622404623822707/7041260848
-        adId: 'ca-app-pub-3940256099942544/6300978111', // TEST
-        adSize: BannerAdSize.ADAPTIVE_BANNER, // Adaptive banner fills width
+        adId: BANNER_AD_ID,
+        adSize: BannerAdSize.ADAPTIVE_BANNER,
         position: BannerAdPosition.BOTTOM_CENTER,
         margin: 0,
         isTesting: true,
       };
 
-      console.log('[AdMobBanner] Showing banner with options:', JSON.stringify(options));
       await AdMob.showBanner(options);
       console.log('[AdMobBanner] ✅ Banner shown successfully');
       trackAdEvent('bannerLoaded');
       trackAdEvent('bannerShown');
-
-      // Set height based on screen width
-      const height = getAdaptiveBannerHeight();
-      console.log('[AdMobBanner] Setting banner height to:', height);
-      setBannerHeight(height);
+      
+      bannerVisibleRef.current = true;
+      setBannerHeight(getAdaptiveBannerHeight());
+      
+      // Clear any pending retry
+      if (retryTimeoutRef.current) {
+        clearTimeout(retryTimeoutRef.current);
+        retryTimeoutRef.current = null;
+      }
+      
+      return true;
     } catch (error) {
       console.error('[AdMobBanner] ❌ Error showing banner:', error);
       trackAdEvent('bannerFailed');
+      bannerVisibleRef.current = false;
+      
+      // Schedule retry after 10 seconds
+      if (!retryTimeoutRef.current) {
+        console.log('[AdMobBanner] Scheduling retry in 10 seconds...');
+        retryTimeoutRef.current = setTimeout(() => {
+          retryTimeoutRef.current = null;
+          showBanner(true);
+        }, 10000);
+      }
+      
+      return false;
     }
   }, []);
 
   const hideBanner = useCallback(async () => {
     console.log('[AdMobBanner] Hiding banner ad...');
+    
+    // Clear any pending retry
+    if (retryTimeoutRef.current) {
+      clearTimeout(retryTimeoutRef.current);
+      retryTimeoutRef.current = null;
+    }
+    
     try {
       await AdMob.removeBanner();
       console.log('[AdMobBanner] ✅ Banner removed successfully');
+      bannerVisibleRef.current = false;
       setBannerHeight(0);
     } catch (error) {
       console.error('[AdMobBanner] Error removing banner:', error);
     }
   }, []);
 
-  const checkAndUpdateAdStatus = useCallback(async () => {
-    console.log('[AdMobBanner] Checking ad-free status...');
+  const ensureBannerVisible = useCallback(async () => {
+    // Check ad-free first
     const adFreeStatus = await isAdFree();
-    console.log('[AdMobBanner] Is ad-free:', adFreeStatus);
     
-    const newShouldShowAds = !adFreeStatus;
-    
-    if (newShouldShowAds !== shouldShowAds) {
-      console.log('[AdMobBanner] Ad status changed. Should show ads:', newShouldShowAds);
-      setShouldShowAds(newShouldShowAds);
-
-      if (newShouldShowAds) {
-        // Ad-free period ended, show banner again
-        console.log('[AdMobBanner] Ad-free period ended, showing banner');
-        await showBanner();
-      } else {
-        // User became ad-free, hide banner
-        console.log('[AdMobBanner] User is now ad-free, hiding banner');
+    if (adFreeStatus) {
+      console.log('[AdMobBanner] User is ad-free, ensuring banner hidden');
+      if (bannerVisibleRef.current) {
         await hideBanner();
       }
+      setShouldShowAds(false);
+      return;
     }
     
-    return adFreeStatus;
-  }, [shouldShowAds, showBanner, hideBanner]);
+    setShouldShowAds(true);
+    
+    // Always try to show banner on resume/check
+    console.log('[AdMobBanner] Ensuring banner is visible...');
+    await showBanner();
+  }, [showBanner, hideBanner]);
 
   useEffect(() => {
-    // Only run on Android
     if (Capacitor.getPlatform() !== 'android') {
       console.log('[AdMobBanner] Not on Android, skipping banner');
       return;
@@ -101,33 +130,35 @@ export function AdMobBanner() {
 
     console.log('[AdMobBanner] Component mounted, initializing...');
 
-    const initializeAdMob = async () => {
-      try {
-        // Check if user is in ad-free period
-        const adFreeStatus = await isAdFree();
-        console.log('[AdMobBanner] Initial ad-free status:', adFreeStatus);
-        setShouldShowAds(!adFreeStatus);
+    // Initial banner show
+    const initializeBanner = async () => {
+      const adFreeStatus = await isAdFree();
+      console.log('[AdMobBanner] Initial ad-free status:', adFreeStatus);
+      setShouldShowAds(!adFreeStatus);
 
-        // If ad-free, don't show banner
-        if (adFreeStatus) {
-          console.log('[AdMobBanner] User is ad-free on init, not showing banner');
-          setBannerHeight(0);
-          return;
-        }
-
-        // AdMob is already initialized in main.tsx, just show banner
-        console.log('[AdMobBanner] User is NOT ad-free, showing banner');
-        await showBanner();
-
-      } catch (error) {
-        console.error('[AdMobBanner] ❌ AdMob banner initialization error:', error);
-        // Keep reserved space even on error to prevent layout shift
+      if (adFreeStatus) {
+        console.log('[AdMobBanner] User is ad-free on init, not showing banner');
+        setBannerHeight(0);
+        return;
       }
+
+      await showBanner();
     };
 
-    initializeAdMob();
+    initializeBanner();
 
-    // Listen for ad-free status changes from rewarded ad
+    // Listen for app resume - re-show banner
+    const appStateListener = App.addListener('appStateChange', async ({ isActive }) => {
+      if (isActive) {
+        console.log('[AdMobBanner] 📱 App resumed, ensuring banner visible...');
+        // Small delay to let app fully resume
+        setTimeout(() => {
+          ensureBannerVisible();
+        }, 500);
+      }
+    });
+
+    // Listen for ad-free status changes
     const handleAdFreeChange = async (event: Event) => {
       const customEvent = event as CustomEvent<{ adFree: boolean }>;
       console.log('[AdMobBanner] Received ad-free status change event:', customEvent.detail);
@@ -140,33 +171,47 @@ export function AdMobBanner() {
     };
 
     window.addEventListener(AD_FREE_EVENT, handleAdFreeChange);
-    console.log('[AdMobBanner] Registered event listener for:', AD_FREE_EVENT);
 
-    // Check ad-free status every minute
+    // Periodic check every 30 seconds - re-show if needed
     const interval = setInterval(async () => {
-      console.log('[AdMobBanner] Periodic ad-free status check...');
-      await checkAndUpdateAdStatus();
-    }, 60000); // Check every minute
+      const adFreeStatus = await isAdFree();
+      
+      if (adFreeStatus) {
+        if (bannerVisibleRef.current) {
+          console.log('[AdMobBanner] Periodic check: ad-free, hiding banner');
+          await hideBanner();
+        }
+        setShouldShowAds(false);
+        return;
+      }
+      
+      // If not ad-free and banner not visible, try to show
+      if (!bannerVisibleRef.current) {
+        console.log('[AdMobBanner] Periodic check: banner not visible, re-showing...');
+        await showBanner(true);
+      }
+    }, 30000);
 
-    // Cleanup on unmount
+    // Cleanup
     return () => {
       console.log('[AdMobBanner] Component unmounting, cleaning up...');
       clearInterval(interval);
+      if (retryTimeoutRef.current) {
+        clearTimeout(retryTimeoutRef.current);
+      }
       window.removeEventListener(AD_FREE_EVENT, handleAdFreeChange);
+      appStateListener.then(listener => listener.remove());
       if (Capacitor.getPlatform() === 'android') {
-        AdMob.removeBanner().catch(err => console.error('[AdMobBanner] Error removing banner on unmount:', err));
+        AdMob.removeBanner().catch(() => {});
       }
     };
-  }, [showBanner, hideBanner, checkAndUpdateAdStatus]);
+  }, [showBanner, hideBanner, ensureBannerVisible]);
 
-  // Update CSS custom property for other components to use
+  // Update CSS custom property
   useEffect(() => {
     document.documentElement.style.setProperty('--banner-height', `${bannerHeight}px`);
-    console.log('[AdMobBanner] Updated CSS --banner-height to:', bannerHeight);
   }, [bannerHeight]);
 
-  // Return a spacer div to prevent content overlap with banner
-  // This spacer reserves space for the banner ad that's positioned at the bottom
   return (
     <div
       className="banner-spacer"
