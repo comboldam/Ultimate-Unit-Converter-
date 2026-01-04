@@ -19,13 +19,21 @@ export interface AdReportData {
   rewardedDismissed: number;
   rewardedFailed: number;
   
-  // Navigation Interstitial
+  // Navigation Interstitial (10% on navigation)
   interstitialLoaded: number;
   interstitialShown: number;
   interstitialDismissed: number;
   interstitialFailed: number;
   interstitialSkippedChance: number; // Didn't pass 10% check
   interstitialSkippedAdFree: number; // User was ad-free
+  
+  // App Open Ad (30% on app start/resume)
+  appOpenLoad: number;
+  appOpenLoaded: number;
+  appOpenShown: number;
+  appOpenFailed: number;
+  appOpenSkippedChance: number; // Didn't pass 30% check
+  appOpenSkippedAdFree: number; // User was ad-free
   
   // Timestamps
   lastReset: string;
@@ -49,6 +57,13 @@ const defaultReport: AdReportData = {
   interstitialFailed: 0,
   interstitialSkippedChance: 0,
   interstitialSkippedAdFree: 0,
+  
+  appOpenLoad: 0,
+  appOpenLoaded: 0,
+  appOpenShown: 0,
+  appOpenFailed: 0,
+  appOpenSkippedChance: 0,
+  appOpenSkippedAdFree: 0,
   
   lastReset: new Date().toISOString(),
   lastUpdated: new Date().toISOString(),
@@ -117,10 +132,14 @@ export function logAdReport(): void {
   console.log(`║   Loaded: ${String(report.rewardedLoaded).padEnd(6)} Shown: ${String(report.rewardedShown).padEnd(6)} Completed: ${report.rewardedCompleted}`.padEnd(51) + '║');
   console.log(`║   Dismissed: ${String(report.rewardedDismissed).padEnd(5)} Failed: ${report.rewardedFailed}`.padEnd(51) + '║');
   console.log('║                                                  ║');
-  console.log('║ INTERSTITIAL ADS (Navigation)                    ║');
+  console.log('║ INTERSTITIAL ADS (10% on navigation)             ║');
   console.log(`║   Loaded: ${String(report.interstitialLoaded).padEnd(6)} Shown: ${String(report.interstitialShown).padEnd(6)} Dismissed: ${report.interstitialDismissed}`.padEnd(51) + '║');
   console.log(`║   Failed: ${String(report.interstitialFailed).padEnd(6)} Skipped (chance): ${report.interstitialSkippedChance}`.padEnd(51) + '║');
   console.log(`║   Skipped (ad-free): ${report.interstitialSkippedAdFree}`.padEnd(51) + '║');
+  console.log('║                                                  ║');
+  console.log('║ APP OPEN ADS (30% on start/resume)               ║');
+  console.log(`║   Loaded: ${String(report.appOpenLoaded).padEnd(6)} Shown: ${String(report.appOpenShown).padEnd(6)} Failed: ${report.appOpenFailed}`.padEnd(51) + '║');
+  console.log(`║   Skipped (chance): ${String(report.appOpenSkippedChance).padEnd(5)} Skipped (ad-free): ${report.appOpenSkippedAdFree}`.padEnd(51) + '║');
   console.log('║                                                  ║');
   console.log(`║ Last Reset: ${report.lastReset.substring(0, 19)}`.padEnd(51) + '║');
   console.log(`║ Last Updated: ${report.lastUpdated.substring(0, 19)}`.padEnd(51) + '║');

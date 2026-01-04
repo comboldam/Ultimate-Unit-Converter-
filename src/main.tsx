@@ -5,6 +5,7 @@ import App from './App.tsx'
 import { AdMob } from '@capacitor-community/admob'
 import { Capacitor } from '@capacitor/core'
 import { initNavigationInterstitial } from './utils/navigationInterstitial'
+import { initAppOpenAd } from './utils/appOpenAd'
 import { logAdReport } from './utils/adReport'
 
 // Log ad report on app start (debug only)
@@ -16,11 +17,14 @@ if (Capacitor.getPlatform() === 'android') {
   console.log('[Main] Android detected, initializing AdMob...');
   
   AdMob.initialize({
-    initializeForTesting: false,
+    initializeForTesting: true, // Using test ads
   }).then(async () => {
     console.log('[Main] ✅ AdMob initialized successfully');
     
-    // Initialize Navigation Interstitial (preloads ad)
+    // Initialize App Open Ad (30% chance on start/resume)
+    await initAppOpenAd();
+    
+    // Initialize Navigation Interstitial (10% chance on navigation)
     await initNavigationInterstitial();
     
   }).catch((error) => {
