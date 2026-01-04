@@ -4,8 +4,8 @@ import { Capacitor } from '@capacitor/core';
 import { isAdFree } from './adFreeState';
 import { trackAdEvent } from './adReport';
 
-// Real Interstitial ad ID (skippable after 1-2 sec with X button)
-const INTERSTITIAL_AD_ID = 'ca-app-pub-1622404623822707/4911767431';
+// REAL: ca-app-pub-1622404623822707/4911767431
+const INTERSTITIAL_AD_ID = 'ca-app-pub-3940256099942544/1033173712'; // TEST
 
 // Probability of showing ad (10%)
 const SHOW_AD_PROBABILITY = 0.1;

@@ -9,8 +9,8 @@ import './SettingsPage.css';
 // Custom event to notify banner to hide
 export const AD_FREE_EVENT = 'adFreeStatusChanged';
 
-// Real rewarded ad ID
-const REWARDED_AD_ID = 'ca-app-pub-1622404623822707/8330291785';
+// REAL: ca-app-pub-1622404623822707/8330291785
+const REWARDED_AD_ID = 'ca-app-pub-3940256099942544/5224354917'; // TEST
 
 export function SettingsPage() {
   const [systemLanguage] = useState(() => navigator.language || 'en-US');

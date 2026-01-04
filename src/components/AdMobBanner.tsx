@@ -32,7 +32,8 @@ export function AdMobBanner() {
       await AdMob.removeBanner().catch(() => {/* Ignore if no banner exists */});
 
       const options: BannerAdOptions = {
-        adId: 'ca-app-pub-3940256099942544/6300978111', // TEST banner ID (switch to real after AdMob approval)
+        // REAL: ca-app-pub-1622404623822707/7041260848
+        adId: 'ca-app-pub-3940256099942544/6300978111', // TEST
         adSize: BannerAdSize.ADAPTIVE_BANNER, // Adaptive banner fills width
         position: BannerAdPosition.BOTTOM_CENTER,
         margin: 0,
