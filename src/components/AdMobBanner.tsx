@@ -32,11 +32,11 @@ export function AdMobBanner() {
       await AdMob.removeBanner().catch(() => {/* Ignore if no banner exists */});
 
       const options: BannerAdOptions = {
-        adId: 'ca-app-pub-3940256099942544/6300978111', // Google TEST banner ID
+        adId: 'ca-app-pub-1622404623822707/7041260848', // Real banner ID
         adSize: BannerAdSize.ADAPTIVE_BANNER, // Adaptive banner fills width
         position: BannerAdPosition.BOTTOM_CENTER,
         margin: 0,
-        isTesting: true, // Force test ads
+        isTesting: false,
       };
 
       console.log('[AdMobBanner] Showing banner with options:', JSON.stringify(options));

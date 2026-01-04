@@ -4,8 +4,8 @@ import { Capacitor } from '@capacitor/core';
 import { isAdFree } from './adFreeState';
 import { trackAdEvent } from './adReport';
 
-// Google TEST Interstitial ad ID (skippable after 1-2 sec with X button)
-const TEST_INTERSTITIAL_AD_ID = 'ca-app-pub-3940256099942544/1033173712';
+// Real Interstitial ad ID (skippable after 1-2 sec with X button)
+const INTERSTITIAL_AD_ID = 'ca-app-pub-1622404623822707/4911767431';
 
 // Probability of showing ad (10%)
 const SHOW_AD_PROBABILITY = 0.1;
@@ -79,8 +79,8 @@ export async function preloadNavigationAd(): Promise<void> {
     
     console.log('[NavInterstitial] Preloading ad...');
     await AdMob.prepareInterstitial({
-      adId: TEST_INTERSTITIAL_AD_ID,
-      isTesting: true,
+      adId: INTERSTITIAL_AD_ID,
+      isTesting: false,
     });
     console.log('[NavInterstitial] ✅ Preload initiated');
   } catch (error) {
@@ -137,8 +137,8 @@ export async function maybeShowNavigationInterstitial(): Promise<boolean> {
     try {
       await setupListeners();
       await AdMob.prepareInterstitial({
-        adId: TEST_INTERSTITIAL_AD_ID,
-        isTesting: true,
+        adId: INTERSTITIAL_AD_ID,
+        isTesting: false,
       });
       
       // Wait for the ad to load

@@ -16,7 +16,7 @@ if (Capacitor.getPlatform() === 'android') {
   console.log('[Main] Android detected, initializing AdMob...');
   
   AdMob.initialize({
-    initializeForTesting: true,
+    initializeForTesting: false,
   }).then(async () => {
     console.log('[Main] ✅ AdMob initialized successfully');
     

@@ -9,8 +9,8 @@ import './SettingsPage.css';
 // Custom event to notify banner to hide
 export const AD_FREE_EVENT = 'adFreeStatusChanged';
 
-// Google TEST rewarded ad ID - always loads
-const TEST_REWARDED_AD_ID = 'ca-app-pub-3940256099942544/5224354917';
+// Real rewarded ad ID
+const REWARDED_AD_ID = 'ca-app-pub-1622404623822707/8330291785';
 
 export function SettingsPage() {
   const [systemLanguage] = useState(() => navigator.language || 'en-US');
@@ -169,12 +169,12 @@ export function SettingsPage() {
       });
       handles.push(h6);
 
-      console.log('[Rewarded] Listeners ready. Preparing ad with ID:', TEST_REWARDED_AD_ID);
+      console.log('[Rewarded] Listeners ready. Preparing ad with ID:', REWARDED_AD_ID);
 
       // Prepare the rewarded ad
       await AdMob.prepareRewardVideoAd({
-        adId: TEST_REWARDED_AD_ID,
-        isTesting: true,
+        adId: REWARDED_AD_ID,
+        isTesting: false,
       });
 
       console.log('[Rewarded] prepareRewardVideoAd() called, waiting for Loaded event...');
