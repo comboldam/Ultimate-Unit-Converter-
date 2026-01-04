@@ -10,9 +10,45 @@ const INTERSTITIAL_AD_ID = 'ca-app-pub-1622404623822707/4911767431';
 // Probability of showing ad (10%)
 const SHOW_AD_PROBABILITY = 0.1;
 
+// Cooldown settings to prevent "too many requests" errors
+const MIN_REQUEST_INTERVAL_MS = 30000; // 30 seconds between requests
+const FAILURE_COOLDOWN_MS = 60000; // 60 seconds after a failure before retrying
+
 let adLoaded = false;
 let isShowingAd = false;
 let listenersSetUp = false;
+let lastRequestTime = 0;
+let lastFailureTime = 0;
+let isCurrentlyLoading = false;
+
+/**
+ * Check if we can make a new ad request (rate limiting)
+ */
+function canMakeRequest(): boolean {
+  const now = Date.now();
+  
+  // If we're already loading, don't start another request
+  if (isCurrentlyLoading) {
+    console.log('[NavInterstitial] ⏳ Already loading, skipping duplicate request');
+    return false;
+  }
+  
+  // If we failed recently, wait for cooldown
+  if (lastFailureTime > 0 && now - lastFailureTime < FAILURE_COOLDOWN_MS) {
+    const waitTime = Math.ceil((FAILURE_COOLDOWN_MS - (now - lastFailureTime)) / 1000);
+    console.log(`[NavInterstitial] ⏳ In failure cooldown, wait ${waitTime}s`);
+    return false;
+  }
+  
+  // If we made a request recently, wait
+  if (lastRequestTime > 0 && now - lastRequestTime < MIN_REQUEST_INTERVAL_MS) {
+    const waitTime = Math.ceil((MIN_REQUEST_INTERVAL_MS - (now - lastRequestTime)) / 1000);
+    console.log(`[NavInterstitial] ⏳ Rate limiting, wait ${waitTime}s`);
+    return false;
+  }
+  
+  return true;
+}
 
 /**
  * Set up listeners for navigation interstitial ad events
@@ -26,12 +62,15 @@ async function setupListeners(): Promise<void> {
     console.log('[NavInterstitial] ✅ Ad loaded:', JSON.stringify(info));
     trackAdEvent('interstitialLoaded');
     adLoaded = true;
+    isCurrentlyLoading = false;
   });
   
   await AdMob.addListener(InterstitialAdPluginEvents.FailedToLoad, (error: AdMobError) => {
     console.error('[NavInterstitial] ❌ Failed to load:', JSON.stringify(error));
     trackAdEvent('interstitialFailed');
     adLoaded = false;
+    isCurrentlyLoading = false;
+    lastFailureTime = Date.now(); // Start cooldown
   });
   
   await AdMob.addListener(InterstitialAdPluginEvents.Showed, () => {
@@ -45,14 +84,17 @@ async function setupListeners(): Promise<void> {
     trackAdEvent('interstitialDismissed');
     isShowingAd = false;
     adLoaded = false;
-    // Preload next ad for future navigation
-    preloadNavigationAd();
+    // Schedule preload after a delay (not immediately)
+    setTimeout(() => {
+      preloadNavigationAd();
+    }, MIN_REQUEST_INTERVAL_MS);
   });
   
   await AdMob.addListener(InterstitialAdPluginEvents.FailedToShow, (error: AdMobError) => {
     console.error('[NavInterstitial] ❌ Failed to show:', JSON.stringify(error));
     trackAdEvent('interstitialFailed');
     isShowingAd = false;
+    lastFailureTime = Date.now();
   });
   
   listenersSetUp = true;
@@ -74,8 +116,22 @@ export async function preloadNavigationAd(): Promise<void> {
     return;
   }
   
+  // Check if ad already loaded
+  if (adLoaded) {
+    console.log('[NavInterstitial] Ad already loaded, skipping preload');
+    return;
+  }
+  
+  // Rate limiting check
+  if (!canMakeRequest()) {
+    return;
+  }
+  
   try {
     await setupListeners();
+    
+    isCurrentlyLoading = true;
+    lastRequestTime = Date.now();
     
     console.log('[NavInterstitial] Preloading ad...');
     await AdMob.prepareInterstitial({
@@ -85,6 +141,8 @@ export async function preloadNavigationAd(): Promise<void> {
     console.log('[NavInterstitial] ✅ Preload initiated');
   } catch (error) {
     console.error('[NavInterstitial] ❌ Error preloading:', error);
+    isCurrentlyLoading = false;
+    lastFailureTime = Date.now();
   }
 }
 
@@ -122,8 +180,8 @@ export async function maybeShowNavigationInterstitial(): Promise<boolean> {
   if (random >= SHOW_AD_PROBABILITY) {
     console.log('[NavInterstitial] 🎲 Random check FAILED (>= 0.1), NOT showing ad');
     trackAdEvent('interstitialSkippedChance');
-    // Still preload for next time
-    if (!adLoaded) {
+    // Still try to preload for next time (with rate limiting)
+    if (!adLoaded && !isCurrentlyLoading) {
       preloadNavigationAd();
     }
     return false;
@@ -131,18 +189,30 @@ export async function maybeShowNavigationInterstitial(): Promise<boolean> {
   
   console.log('[NavInterstitial] 🎲 Random check PASSED (< 0.1)! Will show ad...');
   
-  // If ad not loaded, try to load it now
+  // If ad not loaded, check if we can load now
   if (!adLoaded) {
-    console.log('[NavInterstitial] Ad not preloaded, loading now...');
+    console.log('[NavInterstitial] Ad not preloaded');
+    
+    // Check rate limiting before trying to load
+    if (!canMakeRequest()) {
+      console.log('[NavInterstitial] Cannot load now due to rate limiting');
+      return false;
+    }
+    
+    console.log('[NavInterstitial] Loading ad now...');
     try {
       await setupListeners();
+      
+      isCurrentlyLoading = true;
+      lastRequestTime = Date.now();
+      
       await AdMob.prepareInterstitial({
         adId: INTERSTITIAL_AD_ID,
         isTesting: false,
       });
       
-      // Wait for the ad to load
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Wait for the ad to load (max 3 seconds)
+      await new Promise(resolve => setTimeout(resolve, 3000));
       
       if (!adLoaded) {
         console.log('[NavInterstitial] Ad still not ready after waiting');
@@ -150,6 +220,8 @@ export async function maybeShowNavigationInterstitial(): Promise<boolean> {
       }
     } catch (error) {
       console.error('[NavInterstitial] ❌ Error loading ad:', error);
+      isCurrentlyLoading = false;
+      lastFailureTime = Date.now();
       return false;
     }
   }
@@ -161,6 +233,7 @@ export async function maybeShowNavigationInterstitial(): Promise<boolean> {
     return true;
   } catch (error) {
     console.error('[NavInterstitial] ❌ Error showing ad:', error);
+    lastFailureTime = Date.now();
     return false;
   }
 }
@@ -176,8 +249,10 @@ export async function initNavigationInterstitial(): Promise<void> {
     return;
   }
   
-  // Preload ad in background for faster display later
-  await preloadNavigationAd();
+  // Delay initial preload to let AdMob fully initialize
+  setTimeout(async () => {
+    await preloadNavigationAd();
+  }, 5000);
   
-  console.log('[NavInterstitial] ✅ Initialized');
+  console.log('[NavInterstitial] ✅ Initialized (preload scheduled)');
 }
