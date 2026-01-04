@@ -1,9 +1,11 @@
+import { useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { CategorySelect } from './screens/CategorySelect';
 import { UnitConverter } from './components/UnitConverter';
 import { CurrencyPage } from './pages/CurrencyPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { AdMobBanner } from './components/AdMobBanner';
+import { maybeShowNavigationInterstitial } from './utils/navigationInterstitial';
 import './App.css';
 
 function BottomNav() {
@@ -33,6 +35,26 @@ function BottomNav() {
   );
 }
 
+// Hook to trigger navigation interstitial on route changes
+function NavigationAdTrigger() {
+  const location = useLocation();
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    // Skip on initial render (don't show ad on app start)
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      console.log('[NavAd] First render, skipping ad check');
+      return;
+    }
+
+    console.log('[NavAd] Route changed to:', location.pathname);
+    // 10% chance to show interstitial on navigation
+    maybeShowNavigationInterstitial();
+  }, [location.pathname]);
+
+  return null;
+}
 
 function AppContent() {
   const navigate = useNavigate();
@@ -43,6 +65,7 @@ function AppContent() {
 
   return (
     <div className="app">
+      <NavigationAdTrigger />
       <div className="app-content">
         <Routes>
           <Route path="/" element={<CategorySelect onSelectCategory={handleSelectCategory} />} />
