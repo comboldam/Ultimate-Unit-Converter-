@@ -3,6 +3,7 @@ import { Capacitor } from '@capacitor/core';
 import { isAdFree } from './adFreeState';
 import { trackAdEvent } from './adReport';
 import { App } from '@capacitor/app';
+import { FULLSCREEN_AD_CLOSED_EVENT } from '../components/AdMobBanner';
 
 // REAL: ca-app-pub-1622404623822707/3161725584
 const APP_OPEN_AD_ID = 'ca-app-pub-3940256099942544/9257395921'; // TEST
@@ -195,6 +196,9 @@ export async function maybeShowAppOpenAd(): Promise<boolean> {
     console.log('[AppOpenAd] ✅ Ad shown successfully');
     adLoaded = false;
     isShowingAd = false;
+    
+    // Notify banner to refresh
+    window.dispatchEvent(new Event(FULLSCREEN_AD_CLOSED_EVENT));
     
     // Preload next ad after a delay
     setTimeout(() => {

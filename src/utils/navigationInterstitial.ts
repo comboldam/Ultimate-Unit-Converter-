@@ -3,6 +3,7 @@ import type { AdLoadInfo, AdMobError } from '@capacitor-community/admob';
 import { Capacitor } from '@capacitor/core';
 import { isAdFree } from './adFreeState';
 import { trackAdEvent } from './adReport';
+import { FULLSCREEN_AD_CLOSED_EVENT } from '../components/AdMobBanner';
 
 // REAL: ca-app-pub-1622404623822707/4911767431
 const INTERSTITIAL_AD_ID = 'ca-app-pub-3940256099942544/1033173712'; // TEST
@@ -84,6 +85,10 @@ async function setupListeners(): Promise<void> {
     trackAdEvent('interstitialDismissed');
     isShowingAd = false;
     adLoaded = false;
+    
+    // Notify banner to refresh
+    window.dispatchEvent(new Event(FULLSCREEN_AD_CLOSED_EVENT));
+    
     // Schedule preload after a delay (not immediately)
     setTimeout(() => {
       preloadNavigationAd();
