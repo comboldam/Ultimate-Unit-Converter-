@@ -3,6 +3,7 @@ import { AdMob, RewardAdPluginEvents } from '@capacitor-community/admob';
 import type { AdMobRewardItem, AdLoadInfo, AdMobError } from '@capacitor-community/admob';
 import { Capacitor } from '@capacitor/core';
 import { getAdFreeUntil, setAdFreeFor3Hours, formatAdFreeEndTime, getTimeRemaining } from '../utils/adFreeState';
+import { trackAdEvent } from '../utils/adReport';
 import './SettingsPage.css';
 
 // Custom event to notify banner to hide
@@ -92,12 +93,14 @@ export function SettingsPage() {
 
       const h1 = await AdMob.addListener(RewardAdPluginEvents.Loaded, async (info: AdLoadInfo) => {
         console.log('[Rewarded] EVENT: Loaded', JSON.stringify(info));
+        trackAdEvent('rewardedLoaded');
         try {
           console.log('[Rewarded] Calling showRewardVideoAd()...');
           await AdMob.showRewardVideoAd();
           console.log('[Rewarded] showRewardVideoAd() success');
         } catch (e) {
           console.error('[Rewarded] showRewardVideoAd() error:', e);
+          trackAdEvent('rewardedFailed');
           resetButton();
           await cleanup();
           alert('Error showing ad.');
@@ -107,6 +110,7 @@ export function SettingsPage() {
 
       const h2 = await AdMob.addListener(RewardAdPluginEvents.FailedToLoad, async (err: AdMobError) => {
         console.error('[Rewarded] EVENT: FailedToLoad', JSON.stringify(err));
+        trackAdEvent('rewardedFailed');
         resetButton();
         await cleanup();
         alert('Unable to load ad. Check internet connection.');
@@ -115,11 +119,13 @@ export function SettingsPage() {
 
       const h3 = await AdMob.addListener(RewardAdPluginEvents.Showed, () => {
         console.log('[Rewarded] EVENT: Showed (ad is visible)');
+        trackAdEvent('rewardedShown');
       });
       handles.push(h3);
 
       const h4 = await AdMob.addListener(RewardAdPluginEvents.Rewarded, async (reward: AdMobRewardItem) => {
         console.log('[Rewarded] EVENT: Rewarded!', JSON.stringify(reward));
+        trackAdEvent('rewardedCompleted');
         rewarded = true;
 
         // Save ad-free timestamp: now + 3 hours
@@ -145,6 +151,7 @@ export function SettingsPage() {
 
       const h5 = await AdMob.addListener(RewardAdPluginEvents.Dismissed, async () => {
         console.log('[Rewarded] EVENT: Dismissed');
+        trackAdEvent('rewardedDismissed');
         resetButton();
         await cleanup();
         if (rewarded) {
@@ -155,6 +162,7 @@ export function SettingsPage() {
 
       const h6 = await AdMob.addListener(RewardAdPluginEvents.FailedToShow, async (err: AdMobError) => {
         console.error('[Rewarded] EVENT: FailedToShow', JSON.stringify(err));
+        trackAdEvent('rewardedFailed');
         resetButton();
         await cleanup();
         alert('Unable to show ad.');

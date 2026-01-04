@@ -4,6 +4,7 @@ import type { BannerAdOptions } from '@capacitor-community/admob';
 import { Capacitor } from '@capacitor/core';
 import { isAdFree } from '../utils/adFreeState';
 import { AD_FREE_EVENT } from '../pages/SettingsPage';
+import { trackAdEvent } from '../utils/adReport';
 
 export function AdMobBanner() {
   const [bannerHeight, setBannerHeight] = useState(50); // Reserve minimal space to prevent layout shift
@@ -41,6 +42,8 @@ export function AdMobBanner() {
       console.log('[AdMobBanner] Showing banner with options:', JSON.stringify(options));
       await AdMob.showBanner(options);
       console.log('[AdMobBanner] ✅ Banner shown successfully');
+      trackAdEvent('bannerLoaded');
+      trackAdEvent('bannerShown');
 
       // Set height based on screen width
       const height = getAdaptiveBannerHeight();
@@ -48,6 +51,7 @@ export function AdMobBanner() {
       setBannerHeight(height);
     } catch (error) {
       console.error('[AdMobBanner] ❌ Error showing banner:', error);
+      trackAdEvent('bannerFailed');
     }
   }, []);
 

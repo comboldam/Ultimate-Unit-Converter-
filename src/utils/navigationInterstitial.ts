@@ -2,6 +2,7 @@ import { AdMob, InterstitialAdPluginEvents } from '@capacitor-community/admob';
 import type { AdLoadInfo, AdMobError } from '@capacitor-community/admob';
 import { Capacitor } from '@capacitor/core';
 import { isAdFree } from './adFreeState';
+import { trackAdEvent } from './adReport';
 
 // Google TEST Interstitial ad ID (skippable after 1-2 sec with X button)
 const TEST_INTERSTITIAL_AD_ID = 'ca-app-pub-3940256099942544/1033173712';
@@ -23,21 +24,25 @@ async function setupListeners(): Promise<void> {
   
   await AdMob.addListener(InterstitialAdPluginEvents.Loaded, (info: AdLoadInfo) => {
     console.log('[NavInterstitial] ✅ Ad loaded:', JSON.stringify(info));
+    trackAdEvent('interstitialLoaded');
     adLoaded = true;
   });
   
   await AdMob.addListener(InterstitialAdPluginEvents.FailedToLoad, (error: AdMobError) => {
     console.error('[NavInterstitial] ❌ Failed to load:', JSON.stringify(error));
+    trackAdEvent('interstitialFailed');
     adLoaded = false;
   });
   
   await AdMob.addListener(InterstitialAdPluginEvents.Showed, () => {
     console.log('[NavInterstitial] 📺 Ad SHOWED');
+    trackAdEvent('interstitialShown');
     isShowingAd = true;
   });
   
   await AdMob.addListener(InterstitialAdPluginEvents.Dismissed, () => {
     console.log('[NavInterstitial] 👋 Ad DISMISSED (user closed/skipped)');
+    trackAdEvent('interstitialDismissed');
     isShowingAd = false;
     adLoaded = false;
     // Preload next ad for future navigation
@@ -46,6 +51,7 @@ async function setupListeners(): Promise<void> {
   
   await AdMob.addListener(InterstitialAdPluginEvents.FailedToShow, (error: AdMobError) => {
     console.error('[NavInterstitial] ❌ Failed to show:', JSON.stringify(error));
+    trackAdEvent('interstitialFailed');
     isShowingAd = false;
   });
   
@@ -105,6 +111,7 @@ export async function maybeShowNavigationInterstitial(): Promise<boolean> {
   const adFreeStatus = await isAdFree();
   if (adFreeStatus) {
     console.log('[NavInterstitial] ⏭️ User is AD-FREE, skipping interstitial');
+    trackAdEvent('interstitialSkippedAdFree');
     return false;
   }
   
@@ -114,6 +121,7 @@ export async function maybeShowNavigationInterstitial(): Promise<boolean> {
   
   if (random >= SHOW_AD_PROBABILITY) {
     console.log('[NavInterstitial] 🎲 Random check FAILED (>= 0.1), NOT showing ad');
+    trackAdEvent('interstitialSkippedChance');
     // Still preload for next time
     if (!adLoaded) {
       preloadNavigationAd();

@@ -5,6 +5,11 @@ import App from './App.tsx'
 import { AdMob } from '@capacitor-community/admob'
 import { Capacitor } from '@capacitor/core'
 import { initNavigationInterstitial } from './utils/navigationInterstitial'
+import { logAdReport } from './utils/adReport'
+
+// Log ad report on app start (debug only)
+console.log('[Main] App starting...');
+logAdReport();
 
 // Initialize AdMob globally on app start
 if (Capacitor.getPlatform() === 'android') {
